@@ -6,10 +6,33 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'  # Choose an appropriate agent image
 
-steps:
-  - script: |
-      az login --tenant ramsumanthoutlook.onmicrosoft.com
-      docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
-      docker pull nginx
-      docker tag nginx deamon.azurecr.io/demo/nginxv3
-      docker push deamon.azurecr.io/demo/nginxv3
+stages:
+- stage: Dev
+  displayName: 'Developement'
+  jobs:
+    - job: Build
+      steps:
+      - script: |
+          az login --tenant ramsumanthoutlook.onmicrosoft.com
+          docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
+          docker pull nginx
+          docker tag nginx deamon.azurecr.io/demo/nginxv3
+          docker push deamon.azurecr.io/demo/nginxv3
+
+- stage: Prod
+  displayName: 'Production'
+  dependsOn: Dev
+  condition: |
+     and(
+       succeeded('Dev'),
+       eq(variables['Build.SourceBranch'], 'refs/heads/main')
+     )
+  jobs:
+    - job: Build
+      steps:
+      - script: |
+          az login --tenant ramsumanthoutlook.onmicrosoft.com
+          docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
+          docker pull nginx
+          docker tag nginx deamon.azurecr.io/demo/nginxv3
+          docker push deamon.azurecr.io/demo/nginxv3
