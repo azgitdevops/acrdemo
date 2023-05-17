@@ -21,6 +21,12 @@ stages:
 
 - stage: Prod
   displayName: 'Production'
+  dependsOn: Dev
+  condition: |
+    and(
+      succeeded('Dev'),
+      eq(variables['Build.ScourceBranch'], 'refs/heads/main')
+    )
   jobs:
     - job: Build
       steps:
@@ -30,3 +36,12 @@ stages:
           docker pull nginx
           docker tag nginx deamon.azurecr.io/prod/nginxv1
           docker push deamon.azurecr.io/prod/nginxv1
+    - job: Approval
+      displayName: 'Approval'
+      dependsOn: Build
+      condition: eq(variables['Build.SourceBranch'], 'ref/heads/main')
+      timeoutInMinutes: 4320
+      steps:
+       - task: ManualIntervention@8
+         inputs:
+           instructions: 'Approval for production Deployment'
