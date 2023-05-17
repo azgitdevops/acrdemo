@@ -51,7 +51,7 @@ stages:
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
       timeoutInMinutes: 4320  # Adjust timeout as needed
       steps:
-        - task: ManualIntervention@1
+        - task: ManualValidation@0
           inputs:
             notifyUsers: |
               aryasourav.satapathy@ab-inbev.com
