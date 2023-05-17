@@ -42,7 +42,8 @@ stages:
       condition: eq(variables['Build.SourceBranch'], 'ref/heads/main')
       timeoutInMinutes: 4320
       steps:
-       - task: ManualIntervention@1
+       - task: ManualValidation@0
          inputs:
+           notifyUsers: 'aryasourav.satapathy@ab-inbev.com'
            instructions: 'Approval for production Deployment'
-           emailRecipients: 'Please approve the build'
+           onTimeout: reject
