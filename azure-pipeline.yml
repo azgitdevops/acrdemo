@@ -11,5 +11,5 @@ steps:
       az login --tenant ramsumanthoutlook.onmicrosoft.com
       docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
       docker pull nginx
-      docker tag nginx deamon.azurecr.io/demo/nginxv2
-      docker push deamon.azurecr.io/demo/nginxv2
+      docker tag nginx deamon.azurecr.io/demo/nginxv3
+      docker push deamon.azurecr.io/demo/nginxv3
