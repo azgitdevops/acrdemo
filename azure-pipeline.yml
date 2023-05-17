@@ -16,17 +16,11 @@ stages:
           az login --tenant ramsumanthoutlook.onmicrosoft.com
           docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
           docker pull nginx
-          docker tag nginx deamon.azurecr.io/demo/nginxv3
-          docker push deamon.azurecr.io/demo/nginxv3
+          docker tag nginx deamon.azurecr.io/demo/nginxv4
+          docker push deamon.azurecr.io/demo/nginxv4
 
 - stage: Prod
   displayName: 'Production'
-  dependsOn: Dev
-  condition: |
-     and(
-       succeeded('Dev'),
-       eq(variables['Build.SourceBranch'], 'refs/heads/main')
-     )
   jobs:
     - job: Build
       steps:
@@ -34,5 +28,5 @@ stages:
           az login --tenant ramsumanthoutlook.onmicrosoft.com
           docker login deamon.azurecr.io -u deamon -p 7CrYf4nosXrPZn2fwztHE1jUdj6fOgM+9Y6PxwpUh2+ACRAzpAjH
           docker pull nginx
-          docker tag nginx deamon.azurecr.io/demo/nginxv3
-          docker push deamon.azurecr.io/demo/nginxv3
+          docker tag nginx deamon.azurecr.io/prod/nginxv1
+          docker push deamon.azurecr.io/prod/nginxv1
