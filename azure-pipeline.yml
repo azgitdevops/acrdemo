@@ -42,7 +42,7 @@ stages:
       condition: eq(variables['Build.SourceBranch'], 'ref/heads/main')
       timeoutInMinutes: 4320
       steps:
-       - task: ManualIntervention@8
+       - task: ManualIntervention@1
          inputs:
            instructions: 'Approval for production Deployment'
            emailRecipients: 'Please approve the build'
