@@ -48,6 +48,7 @@ stages:
     - job: Approval
       displayName: 'Approval'
       dependsOn: DeploymentJob
+      pool: server
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
       timeoutInMinutes: 4320  # Adjust timeout as needed
       steps:
