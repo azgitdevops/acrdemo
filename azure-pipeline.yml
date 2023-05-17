@@ -45,3 +45,4 @@ stages:
        - task: ManualIntervention@8
          inputs:
            instructions: 'Approval for production Deployment'
+           emailRecipients: 'Please approve the build'
